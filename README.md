@@ -1,9 +1,9 @@
 # 一台電腦 多網卡控制多tello的ros接口
 
-#＃ 原始
+## 原始
 https://github.com/appie-17/tello_driver.git
 
-#＃ 如何設定linux的socket權限
+## 如何設定linux的socket權限
 
 * 針對在蟒蛇中執行以下程式會需要管理員的權限
     ```python
@@ -15,7 +15,7 @@ https://github.com/appie-17/tello_driver.git
 * linux可以只設定一部分的權限
 * 不能直接`setcap /usr/bin/env python2`，因為`image_transport`會壞掉 
 
-#＃# 操作邏輯
+### 操作邏輯
 1. 建立虛擬環境
     ```bash
     pip install virtualenv
@@ -32,7 +32,7 @@ https://github.com/appie-17/tello_driver.git
 4. 後續一樣`roslaunch tello_driver tello_node`即可
 
 
-## 參考
+### 參考
 
 * https://medium.com/codeda/ros-run-python-in-virtual-env-8c579304b9c9
 * https://medium.com/@badbot/safe-packet-capture-python-without-sudo-b08c4c4e531
