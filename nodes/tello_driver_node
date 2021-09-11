@@ -1,3 +1,4 @@
+#!/home/yuqiang/catkin_ws5/socketPY/bin/python2
 #!/usr/bin/env python2
 import rospy
 from std_msgs.msg import Empty, UInt8, Bool
@@ -90,7 +91,7 @@ class TelloNode(tello.Tello):
             rospy.get_param('~stream_h264_video', False))
         self.bridge = CvBridge()
         self.frame_thread = None
-
+        self.net_card = rospy.get_param('~net_card_name', 'wlx5c925e80f3f7')
         # Connect to drone
         self.log = RospyLogger('Tello')
 
@@ -99,7 +100,7 @@ class TelloNode(tello.Tello):
         self.fast_mode = False        
 #########################################END#######################################    
 
-        super(TelloNode, self).__init__(port=9000)
+        super(TelloNode, self).__init__(port=9000,NetCard=self.net_card)
         rospy.loginfo('Connecting to drone @ %s:%d' % self.tello_addr)
         self.connect()
         try:
@@ -416,9 +417,9 @@ class TelloNode(tello.Tello):
         odom_msg.twist.twist.linear.x = data.mvo.vel_y/10
         odom_msg.twist.twist.linear.y = data.mvo.vel_x/10
         odom_msg.twist.twist.linear.z = -data.mvo.vel_z/10
-        odom_msg.twist.twist.angular.x = data.imu.gyro_x
-        odom_msg.twist.twist.angular.y = data.imu.gyro_y
-        odom_msg.twist.twist.angular.z = data.imu.gyro_z
+        odom_msg.twist.twist.angular.x = data.imu.vg_x
+        odom_msg.twist.twist.angular.y = data.imu.vg_y
+        odom_msg.twist.twist.angular.z = data.imu.vg_z
                 
         self.pub_odom.publish(odom_msg)
         
