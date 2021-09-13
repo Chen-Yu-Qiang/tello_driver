@@ -7,9 +7,9 @@
 	<arg name="camera_calibration"		default="$(find tello_driver)/cfg/960x720.yaml" />    
 	<arg name="namespace"			default="tello1" />
 
-	<group ns="tello1">
-
-		<node pkg="tello_driver" name="tello_driver_node" type="tello_driver_node" output="screen" >
+	<group ns="drone1">
+	<group ns="tello">
+		<node pkg="tello_driver" name="tello_driver_node" type="tello_driver_node" output="screen"  launch-prefix="xterm -geometry 150x20+450+0 -e" >
 			<param name="local_cmd_client_port" value="$(arg local_cmd_client_port)" />
 			<param name="local_vid_server_port" value="$(arg local_vid_server_port)" />
 			<param name="tello_ip" value="$(arg tello_ip)" />
@@ -19,14 +19,15 @@
 			<param name="camera_calibration" value="$(arg camera_calibration)" />	
 			<param name="net_card_name" value="wlx5c925e80f3f7" />		
 		</node>
-
-		<node pkg="image_transport" name="image_compressed" type="republish" args="raw in:=image_raw compressed out:=image_raw" />
+	</group>
+		<include file="$(find mtma)/launch/findpeople.launch" pass_all_args="true"></include>
+		<!--<node pkg="image_transport" name="image_compressed" type="republish" args="raw in:=image_raw compressed out:=image_raw" />-->
 
 	</group>
 
 	<group ns="tello2">
 
-		<node pkg="tello_driver" name="tello_driver_node" type="tello_driver_node" output="screen" >
+		<node pkg="tello_driver" name="tello_driver_node" type="tello_driver_node" output="screen"  launch-prefix="xterm -geometry 150x20+450+50 -e" >
 			<param name="local_cmd_client_port" value="$(arg local_cmd_client_port)" />
 			<param name="local_vid_server_port" value="$(arg local_vid_server_port)" />
 			<param name="tello_ip" value="$(arg tello_ip)" />
@@ -37,7 +38,7 @@
 			<param name="net_card_name" value="wlx5c925e80f3f" />		
 		</node>
 
-		<node pkg="image_transport" name="image_compressed" type="republish" args="raw in:=image_raw compressed out:=image_raw" />
+		<!--<node pkg="image_transport" name="image_compressed" type="republish" args="raw in:=image_raw compressed out:=image_raw" />-->
 
 	</group>
 

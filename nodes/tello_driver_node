@@ -78,6 +78,8 @@ class TelloNode(tello.Tello):
 
 #########################################END#######################################    
     def __init__(self):
+        self.my_namespace=rospy.get_namespace()
+        print(self.my_namespace)
         self.local_cmd_client_port = int(
             rospy.get_param('~local_cmd_client_port', 8890))
         self.local_vid_server_port = int(
@@ -94,7 +96,7 @@ class TelloNode(tello.Tello):
         self.net_card = rospy.get_param('~net_card_name', 'wlx5c925e80f3f7')
         # Connect to drone
         self.log = RospyLogger('Tello')
-
+        tello.log.header_string=self.my_namespace
 #######################################BEGIN#######################################    
         # fast_mode attribute before inheritance from TelloPy object (see override __send_stick_command)
         self.fast_mode = False        
@@ -178,6 +180,9 @@ class TelloNode(tello.Tello):
 
         self.sub_emergency = rospy.Subscriber('emergency', Empty, self.cb_emergency, queue_size=1)               
         
+
+
+
 ###########################################END#####################################
 
         rospy.loginfo('Tello driver node ready')        
